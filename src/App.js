@@ -3,19 +3,28 @@ import "./App.css";
 
 function App() {
   const [cards, setCards] = useState([]);
+  const [showCard, setShowCard] = useState(false);
+  const [selectedCard, setSelectedCard] = useState();
+
+  function handleClick(index) {
+    setSelectedCard(index);
+  }
 
   useEffect(() => {
-    const icons = ["🐛", "💰", "🎓", "📎", "💻", "🕸️", "🌟", "🐈‍⬛"];
+    const icons = ["🐛", "💰", "🎓", "📎", "💻", "🕸️", "🌟", "🐈"];
     setCards(icons.concat(icons).sort(() => Math.random() - 0.5));
   }, []);
 
-  console.log(cards);
   return (
     <div className="App">
       <div className="container">
         {cards.map((card, index) => (
-          <div className="card empty" key={index}>
-            {/* {card} */}
+          <div
+            className={`card ${selectedCard === index ? "selected" : "empty"}`}
+            key={index}
+            onClick={() => handleClick(index)}
+          >
+            {selectedCard === index && card}
           </div>
         ))}
       </div>

@@ -73,6 +73,12 @@
   border-radius: 1rem;
 
   box-shadow: 0 0.8px 6px rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+.selected {
+  border: 2px solid #daa520;
+  background-color: #282c34;
 }
 
 .card:hover {
