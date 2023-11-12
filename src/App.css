@@ -1,5 +1,13 @@
 .App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   text-align: center;
+  background-color: #282c34;
+
+  width: 100vw;
+  height: 100vh;
 }
 
 .App-logo {
@@ -14,7 +22,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +42,41 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.container {
+  /* background-color: red; */
+  /* width: 50%;
+  height: 50%; */
+
+  /* padding: 2rem 0; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.empty {
+  width: 5.2716rem;
+  height: 5.188rem;
+}
+
+.card {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  padding: 1rem;
+  margin: 0.6rem;
+
+  font-size: 2.2rem;
+  background-color: #a0a0a0;
+
+  border: 2px solid #282c34;
+  border-radius: 1rem;
+
+  box-shadow: 0 0.8px 6px rgba(255, 255, 255, 0.05);
+}
+
+.card:hover {
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #daa520;
+  background-color: #282c34;
 }

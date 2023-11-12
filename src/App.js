@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    const icons = ["🐛", "💰", "🎓", "📎", "💻", "🕸️", "🌟", "🐈‍⬛"];
+    setCards(icons.concat(icons).sort(() => Math.random() - 0.5));
+  }, []);
+
+  console.log(cards);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        {cards.map((card, index) => (
+          <div className="card empty" key={index}>
+            {/* {card} */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
