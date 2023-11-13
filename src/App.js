@@ -26,7 +26,6 @@ function App() {
     }
 
     if (flippedIndexes.length === 1) {
-      console.log("Im here");
       setFlippedIndexes([flippedIndexes[0], index]);
       setTimeout(() => {
         setFlippedIndexes([]);
