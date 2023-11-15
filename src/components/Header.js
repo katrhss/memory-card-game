@@ -1,8 +1,15 @@
-function Header({ matchedCards }) {
-  const text = matchedCards.length !== 16 ? "Memory Card Game" : "You won!";
+function Header({ matchedCards, cards, status }) {
+  const text =
+    matchedCards.length !== cards.length || status === "loading"
+      ? "Memory Card Game"
+      : "You won!";
 
   return (
-    <h2 className={matchedCards.length === 16 ? "victory-text" : "text"}>
+    <h2
+      className={
+        matchedCards.length === cards.length ? "victory-text" : "title"
+      }
+    >
       {text}
     </h2>
   );

@@ -3,15 +3,33 @@ import "../App.css";
 import GameArea from "./GameArea";
 import ResetBtn from "./ResetBtn";
 import Header from "./Header";
+import StartingPage from "./StartingPage";
+import StartBtn from "./StartBtn";
 
-const icons = ["🐛", "💰", "🎓", "📎", "💻", "🕸️", "🌟", "🐈"];
+const icons = [
+  "🐛",
+  "💰",
+  "🎓",
+  "📎",
+  "💻",
+  "🕸️",
+  "🌟",
+  "🐈",
+  "⚛️",
+  "🪝",
+  "🎉",
+  "🔥",
+];
+const easy = icons.sort(() => Math.random() - 0.5).slice(0, 8);
+const medium = icons.sort(() => Math.random() - 0.5).slice(0, 10);
+const hard = icons.sort(() => Math.random() - 0.5).slice(0, 12);
 
 const initialState = {
   cards: [],
   matchedCards: [],
   flippedIndexes: [],
-
-  // "loading", "started", "oneFlipped", "twoFlipped", "finished"
+  difficulty: "easy",
+  // "loading", "started","playing" "wrongFlipped", "finished"
   status: "loading",
 };
 
@@ -20,15 +38,21 @@ function reducer(state, action) {
     case "startGame":
       return {
         ...state,
-        cards: icons.concat(icons).sort(() => Math.random() - 0.5),
+        cards:
+          state.difficulty === "easy"
+            ? easy.concat(easy).sort(() => Math.random() - 0.5)
+            : state.difficulty === "medium"
+            ? medium.concat(medium).sort(() => Math.random() - 0.5)
+            : hard.concat(hard).sort(() => Math.random() - 0.5),
         status: "started",
       };
     case "flipCard":
+      if (state.status === "wrongFlipped") return state;
       if (state.flippedIndexes.length === 0)
         return {
           ...state,
           flippedIndexes: [action.payload],
-          status: "oneFlipped",
+          status: "started",
         };
 
       if (
@@ -45,6 +69,7 @@ function reducer(state, action) {
           ],
           flippedIndexes: [],
         };
+      if (state.flippedIndexes[0] === action.payload) return state;
       if (state.flippedIndexes.length === 1)
         return {
           ...state,
@@ -54,24 +79,27 @@ function reducer(state, action) {
     /* falls through */
 
     case "wrongGuess":
-      return { ...state, flippedIndexes: [] };
+      return { ...state, flippedIndexes: [], status: "started" };
+
     case "reset":
       return {
         ...initialState,
         cards: icons.concat(icons).sort(() => Math.random() - 0.5),
       };
+    case "changeDifficulty":
+      return { ...state, difficulty: action.payload };
+    case "finished":
+      return { ...state, status: "finished" };
     default:
       throw new Error("Invalid action");
   }
 }
 
 function App() {
-  // const [cards, setCards] = useState([]);
-  // const [matchedCards, setMatchedCards] = useState([]);
-  // const [flippedIndexes, setFlippedIndexes] = useState([]);
-
-  const [{ cards, matchedCards, flippedIndexes, status }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { cards, matchedCards, flippedIndexes, difficulty, status },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     if (status !== "wrongFlipped") return;
@@ -85,21 +113,26 @@ function App() {
     };
   }, [status]);
 
-  useEffect(() => {
-    dispatch({ type: "startGame" });
-  }, []);
-
   return (
     <div className="App">
-      <Header matchedCards={matchedCards} />
-      <GameArea
-        cards={cards}
-        flippedIndexes={flippedIndexes}
-        matchedCards={matchedCards}
-        dispatch={dispatch}
-      />
-
-      <ResetBtn matchedCards={matchedCards} dispatch={dispatch} />
+      <Header matchedCards={matchedCards} cards={cards} status={status} />
+      {status === "loading" ? (
+        <>
+          <StartingPage dispatch={dispatch} difficulty={difficulty} />
+          <StartBtn dispatch={dispatch} />
+        </>
+      ) : (
+        <>
+          <GameArea
+            cards={cards}
+            flippedIndexes={flippedIndexes}
+            matchedCards={matchedCards}
+            dispatch={dispatch}
+            difficulty={difficulty}
+          />
+        </>
+      )}
+      <ResetBtn matchedCards={matchedCards} dispatch={dispatch} cards={cards} />
     </div>
   );
 }

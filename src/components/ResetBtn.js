@@ -1,9 +1,11 @@
-function ResetBtn({ matchedCards, dispatch }) {
+function ResetBtn({ matchedCards, dispatch, cards }) {
   return (
     <button
-      className={matchedCards.length === 16 ? "reset-btn" : "btn-disabled"}
+      className={
+        matchedCards.length === cards.length ? "reset-btn" : "btn-disabled"
+      }
       onClick={() => dispatch({ type: "reset" })}
-      disabled={matchedCards.length === 16 ? false : true}
+      disabled={matchedCards.length === cards.length ? false : true}
     >
       Reset
     </button>
