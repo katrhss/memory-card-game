@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/memory-gard-game/static/css/main.4b91322f.css",
+    "main.js": "/memory-gard-game/static/js/main.d49d0e4a.js",
+    "index.html": "/memory-gard-game/index.html",
+    "main.4b91322f.css.map": "/memory-gard-game/static/css/main.4b91322f.css.map",
+    "main.d49d0e4a.js.map": "/memory-gard-game/static/js/main.d49d0e4a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4b91322f.css",
+    "static/js/main.d49d0e4a.js"
+  ]
+}
