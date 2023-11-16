@@ -130,9 +130,13 @@ function App() {
             dispatch={dispatch}
             difficulty={difficulty}
           />
+          <ResetBtn
+            matchedCards={matchedCards}
+            dispatch={dispatch}
+            cards={cards}
+          />
         </>
       )}
-      <ResetBtn matchedCards={matchedCards} dispatch={dispatch} cards={cards} />
     </div>
   );
 }
